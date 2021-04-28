@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>the_coding_nerd - video-player-tutotial</title>
+</head>
+<style>
+    #video {
+        object-fit: cover;
+    }
+
+    .display-flex {
+        display: flex;
+        flex-flow: row;
+    }
+
+    .ml {
+        margin-right: 10px
+    }
+
+    .box {
+        width: 500px;
+        height: 500px;
+    }
+</style>
+
+<body>
+    <div class="display-flex">
+        <div class="ml">
+            <video id="video" height="400" width="500" autoplay></video>
+        </div>
+        <div>
+            <canvas id="canvas" style="background: #ccc;" height="400" width="500"></canvas>̥
+        </div>
+
+    </div>
+    <div style="padding: 10px;">
+        <center>
+            <button id="snap">Take Ph̥oto</button>
+        </center>
+    </div>
+</body>
+
+<script>
+    // Grab elements, create settings, etc.
+    var video = document.getElementById('video');
+
+    // Get access to the camera!
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        // Not adding `{ audio: true }` since we only want video now
+        navigator.mediaDevices
+            .getUserMedia({ video: true }) // access for webcam -- returns promise
+            .then(function (stream) {
+                video.srcObject = stream;
+                video.play();
+            }).catch(() => {
+                alert('please allow web cam access');
+            })
+    }
+
+    // Elements for taking the snapshot
+    var context = document.getElementById('canvas').getContext('2d');
+    var video = document.getElementById('video');
+
+    // Trigger photo take
+    document.getElementById("snap")
+        .addEventListener("click", function () {
+            context.drawImage(video, 0, 0, 500, 400);
+        });
+</script>
+
+</html>
